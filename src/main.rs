@@ -46,14 +46,14 @@ fn main() -> std::io::Result<()> {
         Command::Get => {
             let mut stmd = String::default();
             let mut qtmd = String::default();
-            acpi_call.write(r"\_SB.PCI0.LPC0.EC0.STMD".as_bytes())?;
+            acpi_call.write_all(br"\_SB.PCI0.LPC0.EC0.STMD")?;
             acpi_call.read_to_string(&mut stmd)?;
             acpi_call.seek(SeekFrom::Start(0))?;
-            acpi_call.write(r"\_SB.PCI0.LPC0.EC0.QTMD".as_bytes())?;
+            acpi_call.write_all(br"\_SB.PCI0.LPC0.EC0.QTMD")?;
             acpi_call.read_to_string(&mut qtmd)?;
 
-            const X0: &'static str = "0x0\u{0}called\u{0}";
-            const X1: &'static str = "0x1\u{0}called\u{0}";
+            const X0: &str = "0x0\u{0}called\u{0}";
+            const X1: &str = "0x1\u{0}called\u{0}";
 
             println!(
                 "{}",
@@ -66,13 +66,13 @@ fn main() -> std::io::Result<()> {
             );
         }
         Command::Set(Mode::BatterySaving) => {
-            acpi_call.write(r"\_SB.PCI0.LPC0.EC0.VPC0.DYTC 0x0013B001".as_bytes())?;
+            acpi_call.write_all(br"\_SB.PCI0.LPC0.EC0.VPC0.DYTC 0x0013B001")?;
         }
         Command::Set(Mode::ExtremePerformance) => {
-            acpi_call.write(r"\_SB.PCI0.LPC0.EC0.VPC0.DYTC 0x0012B001".as_bytes())?;
+            acpi_call.write_all(br"\_SB.PCI0.LPC0.EC0.VPC0.DYTC 0x0012B001")?;
         }
         Command::Set(Mode::IntelligentCooling) => {
-            acpi_call.write(r"\_SB.PCI0.LPC0.EC0.VPC0.DYTC 0x000FB001".as_bytes())?;
+            acpi_call.write_all(br"\_SB.PCI0.LPC0.EC0.VPC0.DYTC 0x000FB001")?;
         }
     }
     Ok(())
