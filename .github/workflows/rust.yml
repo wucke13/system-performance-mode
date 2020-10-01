@@ -61,5 +61,5 @@ jobs:
       run: cargo build --release
     - uses: actions/upload-artifact@v2
       with:
-        name: ${{ github.event.repository.name }}-executable-${{ matrix.os }}
+        name: ${{ github.event.repository.name }}-executable
         path: target/release/${{ github.event.repository.name }}
